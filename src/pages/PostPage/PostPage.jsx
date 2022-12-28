@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import AddPost from '../../components/AddPost/AddPost'
 import PostList from '../../components/PostList/PostList'
@@ -6,6 +6,7 @@ import PostList from '../../components/PostList/PostList'
 import cl from './PostPage.module.scss'
 import PostFilter from '../../components/Filter/Filter'
 import MyInput from '../../components/UI/input/MyInput'
+import { usePosts } from '../../hooks/usePost'
 
 const PostPage = () => {
   const [posts, setPosts] = useState([
@@ -14,25 +15,13 @@ const PostPage = () => {
     { id: 3, title: '123', description: '2aaa' },
     { id: 4, title: '123', description: 'aaa' },
   ])
-
   const [filter, setFilter] = useState({ sort: '', query: '' })
+  co
+  const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
 
-  const sortedPosts = useMemo(() => {
-    if (filter.sort) {
-      return [...posts].sort((a, b) =>
-        a[filter.sort].localeCompare(b[filter.sort]))
-    }
-    return posts
-  }, [filter.sort, posts])
-
-  const sortedAndSearchedPosts = useMemo(() => {
-    const searchToLower = filter.query.toLowerCase()
-    return sortedPosts.filter(({ title, description }) => (
-      title.toLowerCase().includes(searchToLower) ||
-      description.toLowerCase().includes(searchToLower)
-    ))
-  }, [filter.query, sortedPosts])
-
+  useEffect(() => {
+    console.log("Монтирование EFFECT")
+  })
 
   const addNewPost = (newPost) => {
     setPosts(prevState => ([
@@ -52,18 +41,15 @@ const PostPage = () => {
       <hr />
 
       <PostFilter
-       filter={filter}
-       setFilter={setFilter}
+        filter={filter}
+        setFilter={setFilter}
       />
-      {
-        sortedAndSearchedPosts.length !== 0
-          ?
-          <PostList
-            posts={sortedAndSearchedPosts}
-            onDeletePost={onDeletePost}
-          />
-          : <h2>Empty.</h2>
-      }
+
+      <PostList
+        posts={sortedAndSearchedPosts}
+        onDeletePost={onDeletePost}
+      />
+
     </div>
   )
 }

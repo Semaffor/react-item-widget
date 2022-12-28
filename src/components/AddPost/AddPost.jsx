@@ -41,13 +41,13 @@ const AddPost = ({ addNewPost }) => {
       <MyInput
         type={'text'}
         value={state.title}
-        placeholder={'Название поста'}
+        placeholder={'Post title'}
         onChange={e => onChangeInput('title', e.target.value)}
       />
       <MyInput
         type={'text'}
         value={state.description}
-        placeholder={'Описание поста'}
+        placeholder={'Post description'}
         onChange={e => onChangeInput('description', e.target.value)}
       />
       <MyButton

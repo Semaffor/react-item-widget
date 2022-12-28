@@ -53,7 +53,7 @@ const AddPost = ({ addNewPost }) => {
       <MyButton
         onClick={e => submitForm(e)}
       >
-        Добавить
+        Add new post
       </MyButton>
     </form>
   )

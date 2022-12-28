@@ -3,7 +3,7 @@ import cl from './PostItem.module.scss'
 import MyButton from '../UI/button/MyButton'
 
 const PostItem = ({ post, onDelete}) => {
-  const { id, title, description } = post
+  const { id, title, body } = post
 
   return (
     <div className={cl.PostItem}>
@@ -11,7 +11,7 @@ const PostItem = ({ post, onDelete}) => {
         <i>{id}</i> -
         <strong>{title}</strong>
         <div>
-          {description}
+          {body}
         </div>
       </div>
       <div>

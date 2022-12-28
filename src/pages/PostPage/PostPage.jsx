@@ -2,26 +2,34 @@ import React, { useEffect, useMemo, useState } from 'react'
 
 import AddPost from '../../components/AddPost/AddPost'
 import PostList from '../../components/PostList/PostList'
+import PostFilter from '../../components/Filter/Filter'
+import { useFetching } from '../../hooks/useFetching'
+import { usePosts } from '../../hooks/usePost'
+import { PostService } from '../../API/PostService'
+import Loader from '../../components/Loader/Loader'
 
 import cl from './PostPage.module.scss'
-import PostFilter from '../../components/Filter/Filter'
-import MyInput from '../../components/UI/input/MyInput'
-import { usePosts } from '../../hooks/usePost'
 
 const PostPage = () => {
-  const [posts, setPosts] = useState([
-    { id: 1, title: '444123', description: '1aaa' },
-    { id: 2, title: '123', description: '3aaa' },
-    { id: 3, title: '123', description: '2aaa' },
-    { id: 4, title: '123', description: 'aaa' },
-  ])
+  const [posts, setPosts] = useState([])
   const [filter, setFilter] = useState({ sort: '', query: '' })
-  co
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
 
-  useEffect(() => {
-    console.log("Монтирование EFFECT")
+  const [paginationProps, setPaginationProps] = useState({
+    page: 1,
+    limit: 10,
+    totalCount: 0,
   })
+  const [fetchPosts, isLoading, error] = useFetching(async () => {
+    const response = await PostService.getPosts(paginationProps.limit, paginationProps.page)
+    setPaginationProps({...paginationProps, totalCount: response.headers['x-total-count']})
+    setPosts(response.data)
+    console.log(paginationProps)
+  })
+
+  useEffect(() => {
+    fetchPosts()
+  }, [paginationProps.page])
 
   const addNewPost = (newPost) => {
     setPosts(prevState => ([
@@ -45,11 +53,21 @@ const PostPage = () => {
         setFilter={setFilter}
       />
 
-      <PostList
-        posts={sortedAndSearchedPosts}
-        onDeletePost={onDeletePost}
-      />
+      {error
+        ? <h2>An error has occurred</h2>
+        : null
+      }
 
+      {isLoading
+        ? <Loader />
+        :
+        <PostList
+          posts={sortedAndSearchedPosts}
+          onDeletePost={onDeletePost}
+          paginationProps={paginationProps}
+          setPaginationProps={setPaginationProps}
+        />
+      }
     </div>
   )
 }

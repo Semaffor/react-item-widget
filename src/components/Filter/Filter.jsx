@@ -1,23 +1,43 @@
 import React from 'react'
 
-const Filter = ({options, defaultValue, onChange, value}) => {
+import cl from './Filter.module.scss'
+import MyInput from '../UI/input/MyInput'
+
+const Filter = ({ filter, setFilter}) => {
+  const waysToSort = [
+    { value: 'title', body: 'Title' },
+    { value: 'description', body: 'Description' },
+  ]
+
+  const onChangeFilterState = (prop, value) => {
+    setFilter({...filter, [prop]: value})
+  }
   return (
-    <select
-      value={value}
-      onChange={e => onChange(e.target.value)}
-    >
-      <option value={''} disabled>{defaultValue}</option>
-      {
-        options.map(({value, body}, i) =>
-          <option
-            key={i}
-            value={value}
-          >
-            {body}
-          </option>
-        )
-      }
-    </select>
+    <div>
+      <MyInput
+        value={filter.query}
+        onChange={e => onChangeFilterState('query',e.target.value)}
+        placeholder={'Search...'}
+      />
+      <select
+        className={cl.Filter}
+        value={filter.sort}
+        onChange={e => onChangeFilterState('sort',e.target.value)}
+      >
+        <option value={''} disabled>Sort by</option>
+        {
+          waysToSort.map(({ value, body }, i) =>
+            <option
+              key={i}
+              value={value}
+            >
+              {body}
+            </option>,
+          )
+        }
+      </select>
+    </div>
+
   )
 }
 

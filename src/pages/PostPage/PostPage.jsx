@@ -4,7 +4,7 @@ import AddPost from '../../components/AddPost/AddPost'
 import PostList from '../../components/PostList/PostList'
 
 import cl from './PostPage.module.scss'
-import Filter from '../../components/Filter/Filter'
+import PostFilter from '../../components/Filter/Filter'
 import MyInput from '../../components/UI/input/MyInput'
 
 const PostPage = () => {
@@ -15,24 +15,23 @@ const PostPage = () => {
     { id: 4, title: '123', description: 'aaa' },
   ])
 
-  const [selectedSort, setSelectedSort] = useState('')
-  const [searchQuery, setSearchQuery] = useState('')
+  const [filter, setFilter] = useState({ sort: '', query: '' })
 
   const sortedPosts = useMemo(() => {
-    if (selectedSort) {
+    if (filter.sort) {
       return [...posts].sort((a, b) =>
-        a[selectedSort].localeCompare(b[selectedSort]))
+        a[filter.sort].localeCompare(b[filter.sort]))
     }
     return posts
-  }, [selectedSort, posts])
+  }, [filter.sort, posts])
 
   const sortedAndSearchedPosts = useMemo(() => {
-    const searchToLower = searchQuery.toLowerCase()
+    const searchToLower = filter.query.toLowerCase()
     return sortedPosts.filter(({ title, description }) => (
       title.toLowerCase().includes(searchToLower) ||
       description.toLowerCase().includes(searchToLower)
     ))
-  }, [searchQuery, sortedPosts])
+  }, [filter.query, sortedPosts])
 
 
   const addNewPost = (newPost) => {
@@ -45,40 +44,25 @@ const PostPage = () => {
     setPosts(posts.filter(post => post.id !== postToDelete.id))
   }
 
-  const waysToSort = [
-    { value: 'title', body: 'Title' },
-    { value: 'description', body: 'Description' },
-  ]
-
-  const sortPosts = (wayToSort) => {
-    setSelectedSort(wayToSort)
-  }
-
   return (
     <div className={cl.PostPage}>
       <AddPost
         addNewPost={addNewPost}
       />
       <hr />
-      <MyInput
-        value={searchQuery}
-        onChange={e => setSearchQuery(e.target.value)}
-        placeholder={'Search...'}
-      />
-      <Filter
-        defaultValue={'Sort by'}
-        options={waysToSort}
-        value={selectedSort}
-        onChange={sortPosts}
+
+      <PostFilter
+       filter={filter}
+       setFilter={setFilter}
       />
       {
-        posts.length !== 0
+        sortedAndSearchedPosts.length !== 0
           ?
           <PostList
             posts={sortedAndSearchedPosts}
             onDeletePost={onDeletePost}
           />
-          : <h2>Пу213сто</h2>
+          : <h2>Empty.</h2>
       }
     </div>
   )

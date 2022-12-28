@@ -1,0 +1,12 @@
+.PostItem {
+  display: flex;
+  border: 3px dashed aqua;
+  padding: 20px;
+  margin-bottom: 10px;
+  align-items: center;
+  justify-content: space-between;
+
+  &__content {
+
+  }
+}

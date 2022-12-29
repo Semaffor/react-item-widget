@@ -21,15 +21,15 @@ const MainPage = () => {
     totalCount: 0,
   })
   const [fetchPosts, isLoading, error] = useFetching(async () => {
+    console.log(paginationProps.limit)
     const response = await PostService.getPosts(paginationProps.limit, paginationProps.page)
     setPaginationProps({...paginationProps, totalCount: response.headers['x-total-count']})
     setPosts(response.data)
-    console.log(paginationProps)
   })
 
   useEffect(() => {
     fetchPosts()
-  }, [paginationProps.page])
+  }, [paginationProps.page, paginationProps.limit])
 
   const addNewPost = (newPost) => {
     setPosts(prevState => ([

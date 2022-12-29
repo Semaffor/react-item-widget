@@ -1,28 +1,29 @@
 import React from 'react'
 
-import cl from './Filter.module.scss'
 import MyInput from '../UI/input/MyInput'
 
-const Filter = ({ filter, setFilter}) => {
+import cl from './Filter.module.scss'
+
+const Filter = ({ filter, setFilter }) => {
   const waysToSort = [
     { value: 'title', body: 'Title' },
     { value: 'description', body: 'Description' },
   ]
 
   const onChangeFilterState = (prop, value) => {
-    setFilter({...filter, [prop]: value})
+    setFilter({ ...filter, [prop]: value })
   }
   return (
     <div>
       <MyInput
         value={filter.query}
-        onChange={e => onChangeFilterState('query',e.target.value)}
+        onChange={e => onChangeFilterState('query', e.target.value)}
         placeholder={'Search...'}
       />
       <select
         className={cl.Filter}
         value={filter.sort}
-        onChange={e => onChangeFilterState('sort',e.target.value)}
+        onChange={e => onChangeFilterState('sort', e.target.value)}
       >
         <option value={''} disabled>Sort by</option>
         {
@@ -37,7 +38,6 @@ const Filter = ({ filter, setFilter}) => {
         }
       </select>
     </div>
-
   )
 }
 

@@ -16,6 +16,15 @@ const PostList = ({ posts, onDeletePost, paginationProps, setPaginationProps }) 
   return (
     <div className={cl.PostList}>
 
+      <select
+        value={paginationProps.limit}
+        onChange={e => setPaginationProps({...paginationProps, limit: e.target.value})}
+      >
+        <option value={'5'}>5</option>
+        <option value={'10'}>10</option>
+        <option value={'25'}>25</option>
+      </select>
+
       <h1 style={{ textAlign: 'center' }}>Posts</h1>
       {
         posts.map((post, i) => (

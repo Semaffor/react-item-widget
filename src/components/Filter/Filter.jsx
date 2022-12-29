@@ -7,7 +7,7 @@ import cl from './Filter.module.scss'
 const Filter = ({ filter, setFilter }) => {
   const waysToSort = [
     { value: 'title', body: 'Title' },
-    { value: 'description', body: 'Description' },
+    { value: 'body', body: 'Description' },
   ]
 
   const onChangeFilterState = (prop, value) => {

@@ -9,3 +9,4 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ## Example
 
+![](https://github.com/Semaffor/react-item-widget/blob/main/_rm-data/ezgif.com-gif-maker.gif)

@@ -8,9 +8,9 @@ import { usePosts } from '../../hooks/usePost'
 import { PostService } from '../../API/PostService'
 import Loader from '../../components/Loader/Loader'
 
-import cl from './PostPage.module.scss'
+import cl from './MainPage.module.scss'
 
-const PostPage = () => {
+const MainPage = () => {
   const [posts, setPosts] = useState([])
   const [filter, setFilter] = useState({ sort: '', query: '' })
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
@@ -72,4 +72,4 @@ const PostPage = () => {
   )
 }
 
-export default PostPage
+export default MainPage

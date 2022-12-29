@@ -1,0 +1,15 @@
+.Pagination{
+  margin: 30px 0;
+  text-align: center;
+  &__Item {
+    border: 3px solid teal;
+    padding: 7px 10px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+}
+
+.Active {
+  border: 2px solid orange;
+  font-weight: bold;
+}

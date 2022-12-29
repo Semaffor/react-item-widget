@@ -1,28 +1,34 @@
-import React from 'react'
-import MainPage from '../Main/MainPage'
+import React, { useEffect, useState } from 'react'
+import { BrowserRouter } from 'react-router-dom'
+
 import Container from '../../components/Container/Container'
-import AddPost from '../../components/AddPost/AddPost'
-import { BrowserRouter, Navigate, NavLink, Route, Routes } from 'react-router-dom'
-import About from '../About/About'
 import Header from '../../components/NavBar/Header'
-import PostPage from '../Post/PostPage'
+import AppRoutes from '../../router/AppRoutes'
+import { AuthContext } from '../../context'
 
 function App() {
+
+  const [isAuth, setAuth] = useState(false)
+  const [isLoading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (localStorage.getItem('isAuth')){
+      setAuth(true)
+    }
+    setLoading(false)
+  }, [])
+
   return (
-    <div className='App'>
+    <AuthContext.Provider value={{
+      isAuth, setAuth, isLoading
+    }}>
       <BrowserRouter>
-        <Header/>
+        <Header />
         <Container>
-          <Routes>
-            <Route path={'/'} element={<MainPage/>}/>
-            <Route path={'/post/:id'} element={<PostPage/>}/>
-            <Route path={'/about'} element={<About/>}/>
-            <Route path={'*'} element={<Navigate to={"/"}/>}
-            />
-          </Routes>
+          <AppRoutes />
         </Container>
       </BrowserRouter>
-    </div>
+    </AuthContext.Provider>
   )
 }
 

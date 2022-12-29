@@ -8,19 +8,19 @@ const PostItem = ({ post, onDelete }) => {
   const router = useNavigate()
 
   return (
-      <Link className={cl.PostItem} to={`/post/${id}`}>
-        <div className={cl.PostItem__content}>
+      <div className={cl.PostItem}>
+        <Link className={cl.PostItem__content}  to={`/post/${id}`}>
           <i>{id}</i> -
           <strong>{title}</strong>
           <div>
             {body}
           </div>
-        </div>
+        </Link>
         <div>
           <MyButton onClick={e => onDelete(post)}>Delete</MyButton>
         </div>
 
-      </Link>
+      </div>
   )
 }
 

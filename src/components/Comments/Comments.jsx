@@ -31,7 +31,7 @@ const Comments = ({ postId }) => {
         comments.map(({ id, name, email, body }) => (
           <div key={id} className={cl.CommentsBlock}>
             <div>
-              <span>user: <i>{name}</i>, email: {email}</span>
+              <span>user: <i>{name}</i>, <h5>email: {email}</h5></span>
             </div>
             <hr/>
             <div>{body}</div>

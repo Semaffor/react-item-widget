@@ -26,6 +26,7 @@ const PostPage = () => {
         ? <Loader />
         :
         <div>
+          <h2 style={{alignItems: 'center'}}>You've opened the post with ID: {post.id}</h2>
           <span>Title: {post.title}</span>
           <hr/>
           <span>Description: {post.body}</span>
